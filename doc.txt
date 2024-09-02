@@ -1,0 +1,12 @@
+Financial Track
+-UserID
+-Description
+-Date
+-Amount
+-Category
+-Payment
+
+npm i express cors sequelize pg pg-hstore 
+
+เริ่มสร้าง index.js 
+ทำ models ต่อด้วย controlles ต่อด้วย router และ index.js 
