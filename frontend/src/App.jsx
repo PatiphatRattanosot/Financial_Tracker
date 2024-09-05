@@ -1,12 +1,14 @@
-import Navbar from './components/Navbar';
-import './App.css'
+import './App.css';
+import {Routes, Route } from 'react-router-dom';
+import Financial_Page from './pages/Financial_Page';
 
 function App() {
   return (
-    <>
-      <Navbar/>
-    </>
+    
+      <Routes>
+        <Route path="/" element={<Financial_Page />} />
+      </Routes>
   );
 }
 
-export default App
+export default App;

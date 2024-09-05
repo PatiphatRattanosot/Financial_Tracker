@@ -1,85 +1,69 @@
-import React from "react";
-import { useState, useEffect } from "react";
-function Navbar() {
-  const [theme, setTheme] = useState("light");
-  useEffect(() => {
-    localStorage.setItem("theme", theme);
-    const localTheme = localStorage.getItem("theme");
-    document.querySelector("html")?.setAttribute("data-theme", localTheme);
-  }, [theme]);
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+  SignUpButton,
+} from "@clerk/clerk-react";
 
-  const toggleTheme = (e) => {
-    if (e.target.checked) {
-      setTheme("dark");
-    } else {
-      setTheme("light");
-    }
+// eslint-disable-next-line react/prop-types
+const Navbar = ({ theme, setTheme }) => {
+  const toggleTheme = () => {
+    const newTheme = theme === "dark" ? "light" : "dark";
+    setTheme(newTheme);
   };
 
   const navigation = [
-    { name: "Sreach", href: "/sreach"  },
-    { name: "All_Financial", href: "/getAll" },
-    { name: "Financial", href: "/getByUserId" },
+    { name: "Sreach", href: "/" },
+    { name: "All_Financial", href: "/financial" },
+    { name: "All_User", href: "/user/financial" },
     { name: "Add Financial", href: "/add" },
   ];
 
-
-
   return (
-    <div className="navbar bg-base-100">
-      <div className="flex-1">
+    <div
+      className={`navbar ${
+        theme === "dark" ? "bg-indigo-900" : "bg-indigo-500"
+      }`}
+    >
+      <div className="flex-none mx-8">
         <a className="btn btn-ghost text-xl">daisyUI</a>
       </div>
-      {navigation.map((item) => (
-        <a
-          key={item.name}
-          href={item.href}
-          className="rounded-md px-3 py-2 text-sm font-medium"
-        >
-          {item.name}
-        </a>
-      ))}
+      <div className="flex-1 flex justify-center">
+        {navigation.map((item) => (
+          <a
+            key={item.name}
+            href={item.href}
+            className="rounded-md px-3 py-2 text-sm font-medium"
+          >
+            {item.name}
+          </a>
+        ))}
+      </div>
       <div className="flex-none mx-8 gap-2">
-        <div className="dropdown dropdown-end">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-ghost btn-circle avatar"
-          >
-            <div className="w-10 rounded-full">
-              <img
-                alt="Tailwind CSS Navbar component"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-              />
-            </div>
-          </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
-          >
-            <li>
-              <a className="justify-between">
-                Profile
-                <span className="badge">New</span>
-              </a>
-            </li>
-            <li>
-              <a>Settings</a>
-            </li>
-            <li>
-              <a>Logout</a>
-            </li>
-          </ul>
+        <div className="">
+          <SignedOut>
+            <SignUpButton mode="modal" className="btn btn-outline mr-4" />
+            <SignInButton mode="modal" className="btn btn-primary" />
+          </SignedOut>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
         </div>
       </div>
       <div className="flex-none">
         <label className="swap swap-rotate">
-          {/* this hidden checkbox controls the state */}
-          <input type="checkbox" onClick={toggleTheme} />
+          <input
+            type="checkbox"
+            checked={theme === "dark"}
+            onChange={toggleTheme}
+          />
 
           {/* moon icon */}
           <svg
-            className="swap-on h-10 w-10 fill-current"
+            className={`swap-on h-10 w-10 fill-current ${
+              theme === "dark" ? "block" : "hidden"
+            }`}
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
           >
@@ -88,7 +72,9 @@ function Navbar() {
 
           {/* sun icon */}
           <svg
-            className="swap-off h-10 w-10 fill-current"
+            className={`swap-off h-10 w-10 fill-current ${
+              theme === "light" ? "block" : "hidden"
+            }`}
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
           >
@@ -98,6 +84,6 @@ function Navbar() {
       </div>
     </div>
   );
-}
+};
 
 export default Navbar;

@@ -5,7 +5,7 @@ module.exports = {
   USER: process.env.USER,
   PASSWORD: process.env.PASSWORD,
   DATABASE: process.env.DATABASE,
-  dialect: process.env.dialect,
+  dialect: process.env.DAILECT,
   pool: {
     max: 5,
     min: 0,
