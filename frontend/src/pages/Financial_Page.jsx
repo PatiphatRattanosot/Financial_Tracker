@@ -3,20 +3,12 @@ import FinancialService from "../services/financial.service";
 
 function Financial_Page() {
   const [financial, setFinancial] = useState([]);
-  const [theme, setTheme] = useState(null);
-
-  useEffect(() => {
-    // Retrieve the theme from localStorage
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme) {
-      setTheme(savedTheme);
-    }
-  }, []);
 
   useEffect(() => {
     const getFinancial = async () => {
       try {
         const response = await FinancialService.getAllFinancial();
+        console.log(response);
         const formattedData = response.data.map((item) => ({
           ...item,
           date: new Date(item.date).toLocaleDateString(),

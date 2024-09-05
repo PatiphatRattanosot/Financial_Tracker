@@ -1,16 +1,19 @@
 import React from "react";
 import { useState } from "react";
 import FinancialService from "../services/financial.service";
+import { useUser } from "@clerk/clerk-react";
+import { useFinancial } from "../contexts/financial.context";
 function AddFinancial() {
-  const userId = "Admin";
   const [financial, setfinancial] = useState({
+    description: "",
     amount: "",
     category: "",
-    userId: userId,
-    description: "",
     date: "",
     paymentMethod: "",
   });
+
+  const { add_Financial } = useFinancial;
+  const { user } = useUser();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -139,7 +142,7 @@ function AddFinancial() {
 
         <div className="flex justify-end">
           <button onClick={handleClick} className="btn btn-primary">
-            Update
+            Add Record
           </button>
         </div>
       </label>
