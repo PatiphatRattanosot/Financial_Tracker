@@ -5,6 +5,7 @@ import Layout from "../components/Layout";
 import AddFinancial from "../pages/AddFinancial";
 import Dashbord from "../pages/dashbord";
 import Home from "../pages/Home";
+import EditRecord_Page from "../pages/EditRecord_Page";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -29,7 +30,10 @@ const router = createBrowserRouter([
       {
         path: "/add",
         element: <AddFinancial />,
-      },
+      },{
+        path:"/edit/:id",
+        element:<EditRecord_Page/>
+      }
     ],
   },
 ]);

@@ -4,6 +4,7 @@ import {
   SignInButton,
   UserButton,
   SignUpButton,
+  
 } from "@clerk/clerk-react";
 
 // eslint-disable-next-line react/prop-types
@@ -22,9 +23,8 @@ const Navbar = ({ theme, setTheme }) => {
 
   return (
     <div
-      className={`navbar ${
-        theme === "dark" ? "bg-indigo-900" : "bg-indigo-500"
-      }`}
+      className={`navbar ${theme === "dark" ? "bg-indigo-900" : "bg-indigo-500"
+        }`}
     >
       <div className="flex-none mx-8">
         <a className="btn btn-ghost text-xl">daisyUI</a>
@@ -47,7 +47,7 @@ const Navbar = ({ theme, setTheme }) => {
             <SignInButton mode="modal" className="btn btn-primary" />
           </SignedOut>
           <SignedIn>
-            <UserButton />
+          <UserButton />
           </SignedIn>
         </div>
       </div>
@@ -61,9 +61,8 @@ const Navbar = ({ theme, setTheme }) => {
 
           {/* moon icon */}
           <svg
-            className={`swap-on h-10 w-10 fill-current ${
-              theme === "dark" ? "block" : "hidden"
-            }`}
+            className={`swap-on h-10 w-10 fill-current ${theme === "dark" ? "block" : "hidden"
+              }`}
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
           >
@@ -72,9 +71,8 @@ const Navbar = ({ theme, setTheme }) => {
 
           {/* sun icon */}
           <svg
-            className={`swap-off h-10 w-10 fill-current ${
-              theme === "light" ? "block" : "hidden"
-            }`}
+            className={`swap-off h-10 w-10 fill-current ${theme === "light" ? "block" : "hidden"
+              }`}
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
           >

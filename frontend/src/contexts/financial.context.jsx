@@ -6,7 +6,7 @@ import { Children } from "react";
 
 // export const FinancialContext = createContext();
 
-// export const FinancialProvider = ({ children }) => {};
+// export const FinancialProvider = ({ children }) => {}; 
 
 // export const userFinancial = () => useContext(FinancialContext);
 
@@ -19,10 +19,8 @@ export const FinancialProvider = ({ children }) => {
   const fetchRecords = async () => {
     if (!user) return;
     try {
-      const response = FinancialService.getAllFinancialByUserId(user.id);
-      console.log(response);
+      const response = await FinancialService.getAllFinancialByUserId(user.id);
       if (response.status === 200) {
-        console.log("asdasdasdasdasdas");
         setRecords(response.data);
       }
     } catch (error) {
@@ -35,21 +33,33 @@ export const FinancialProvider = ({ children }) => {
   }, [user]);
 
   const add_Financial = async (financial) => {
+    console.log("Adding financial:", financial);
     try {
       const response = await FinancialService.addFinancial(financial);
+      console.log("Response from FinancialService:", response);
+      
+      
       if (response.status === 200) {
         setRecords((prev) => [...prev, response.data]);
+        return response
+      } else {
+        console.error("Failed to add record:", response.statusText);
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error("Error in add_Financial:", error);
+    }
   };
+  
 
   const update_Financial = async (id, newFinancial) => {
     try {
       const response = await FinancialService.updateFinancial(id, newFinancial);
+      console.log("response from update_Financial ",response);
       if (response.status === 200) {
         setRecords((prev) =>
           prev.map((record) => {
             if (record.id === id) {
+              console.log("สำเร็จ");
               return newFinancial;
             } else {
               return record;
@@ -65,6 +75,7 @@ export const FinancialProvider = ({ children }) => {
       const response = FinancialService.deleteFinancial(id);
       if (response.status === 200) {
         setRecords((prev) => prev.filter((record) => record.id !== id));
+        return response
       }
     } catch (error) {}
   };
