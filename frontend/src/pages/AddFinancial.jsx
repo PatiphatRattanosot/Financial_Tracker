@@ -29,7 +29,14 @@ function AddFinancial() {
       console.log("Updated financial:", updatedFinancial);
       
       await add_Financial(updatedFinancial)
-      
+      setfinancial({
+        description: "",
+        amount: "",
+        category: "",
+        date: "",
+        paymentMethod: "",
+        userId:"",
+      })
     } catch (error) {
       console.error("Error in handleClick:", error);
       alert(error?.response?.data?.message || "An error occurred");

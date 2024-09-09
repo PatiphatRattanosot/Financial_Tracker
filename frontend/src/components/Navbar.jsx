@@ -6,31 +6,33 @@ import {
   SignUpButton,
   
 } from "@clerk/clerk-react";
-
+import { useUser } from "@clerk/clerk-react";
 // eslint-disable-next-line react/prop-types
 const Navbar = ({ theme, setTheme }) => {
+  const {user} = useUser()
   const toggleTheme = () => {
     const newTheme = theme === "dark" ? "light" : "dark";
     setTheme(newTheme);
   };
 
-  const navigation = [
-    { name: "Sreach", href: "/" },
-    { name: "All_Financial", href: "/financial" },
-    { name: "All_User", href: "/user/financial" },
-    { name: "Add Financial", href: "/add" },
-  ];
+  const navigation = {
+    User: [
+    { name: "Dashbord", href: "/" },
+    { name: "Financial For Me", href: "/financial" },
+    { name: "Add Financial", href: "/add" },],
+    Own:[{name: "Home", href: "/"}]
+  };
 
   return (
-    <div
-      className={`navbar ${theme === "dark" ? "bg-indigo-900" : "bg-indigo-500"
-        }`}
-    >
-      <div className="flex-none mx-8">
+    <div className={`navbar ${theme === "dark" ? "bg-indigo-900" : "bg-indigo-500"}`}>
+      <div className="navbar-start">
         <a className="btn btn-ghost text-xl">daisyUI</a>
       </div>
-      <div className="flex-1 flex justify-center">
-        {navigation.map((item) => (
+      <div className="navbar-center">
+      {user ? (
+        <div className="flex-1 flex justify-center">
+          
+        {navigation.User.map((item) => (
           <a
             key={item.name}
             href={item.href}
@@ -38,10 +40,24 @@ const Navbar = ({ theme, setTheme }) => {
           >
             {item.name}
           </a>
-        ))}
+        ) )}
       </div>
-      <div className="flex-none mx-8 gap-2">
-        <div className="">
+      ):(
+        <div className="flex-1 flex justify-center">
+          {navigation.Own.map((item) => (
+          <a
+            key={item.name}
+            href={item.href}
+            className="rounded-md px-3 py-2 text-sm font-medium"
+          >
+            {item.name}
+          </a>
+        ) )}
+        </div>
+      )}
+      </div>
+      <div className="navbar-end">
+        <div className="flex-none mx-8 gap-2">
           <SignedOut>
             <SignUpButton mode="modal" className="btn btn-outline mr-4" />
             <SignInButton mode="modal" className="btn btn-primary" />

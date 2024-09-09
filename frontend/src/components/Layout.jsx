@@ -1,10 +1,11 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, Navigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { useEffect, useState } from "react";
 import { FinancialProvider } from "../contexts/financial.context";
-import { SignedIn, SignedOut } from "@clerk/clerk-react";
+import { SignIn, useUser } from "@clerk/clerk-react";
 function Layout() {
+  const { user } = useUser();
   const [theme, setTheme] = useState(
     () => localStorage.getItem("theme") || "light"
   );
@@ -14,6 +15,7 @@ function Layout() {
     document.querySelector("html")?.setAttribute("data-theme", theme);
   }, [theme]);
 
+  
   return (
     <FinancialProvider>
       <div className="flex flex-col min-h-screen">
