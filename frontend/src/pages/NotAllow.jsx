@@ -1,3 +1,5 @@
+
+import { SignInButton } from '@clerk/clerk-react';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
@@ -30,8 +32,10 @@ function NotAllow() {
             Not <span className="text-red-800">Allowed!!!</span>
           </h1>
           <p className="pt-8 text-blue-600">
-            To access this page, you must log in with a higher level account.
+          to access this page You must SignIn
           </p>
+          <span className="pt-8 text-blue-600" >SignIn Now ➔    <SignInButton className="btn btn-primary my-4"/></span>
+          
           <p className="pt-3 pb-6 text-blue-500">
             You will be redirected to the homepage in{" "}
             <span className="text-emerald-700">{counter}</span> seconds.
