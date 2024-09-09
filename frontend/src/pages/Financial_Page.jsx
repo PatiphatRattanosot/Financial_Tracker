@@ -10,11 +10,7 @@ function Financial_Page() {
   useEffect(() => {
     const getFinancial = async () => {
       try {
-        const financial = records.map((item) => ({
-          ...item,
-          date: new Date(item.date).toLocaleDateString()
-        }));
-        setFinancial(financial);
+        setFinancial(records);
       } catch (error) {
         console.error("Error fetching financial data:", error);
       }
@@ -23,7 +19,6 @@ function Financial_Page() {
     getFinancial();
   }, [records]);
 
-  // Pagination logic
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = financial.slice(indexOfFirstItem, indexOfLastItem);
@@ -35,19 +30,17 @@ function Financial_Page() {
 
   const handleDelete = async (id) => {
     try {
-      //เรียกใช้ฟังชั่น deleteResto จาก RestoServics
-      const response = await delete_Financial(id);
+      await delete_Financial(id);
       
-        Swal.fire(
-          {
-            position: "center",
-            icon: "success",
-            title: "Restaurant Delete",
-            text: "Delete successfully!",
-            showConfirmButton: true,
-          }).then(() => {
-            window.location.reload()
-          })
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Financial Record Delete",
+          text: "Delete " + id + " successfully!",
+          showConfirmButton: true,
+        }).then(() => {
+          // window.location.reload();
+        });
           
     } catch (error) {
       Swal.fire({

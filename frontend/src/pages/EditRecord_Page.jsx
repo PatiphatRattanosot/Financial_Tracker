@@ -4,10 +4,9 @@ import { useParams ,useNavigate} from "react-router-dom";
 import { useUser } from "@clerk/clerk-react";
 import { useFinancial } from "../contexts/financial.context";
 import FinancialService from "../services/financial.service";
-import Swal from 'sweetalert2'
 function EditRecord_page() {
     const { user } = useUser();
-    const { update_Financial } = useFinancial();
+    const { records,update_Financial } = useFinancial();
     const { id } = useParams();
     const navigate = useNavigate();
     const [financial, setFinancial] = useState({
@@ -19,25 +18,43 @@ function EditRecord_page() {
         userId: "",
     });
 
+
     useEffect(() => {
-        const getFinancialById = async () => {
-            try {
-                const response = await FinancialService.getByFinancialId(id);
-                const data = response.data;
+      const getFinancialById = async () => {
+        try {
+            console.log(records);
+          const record = await records.find((record) => record.id == id);
+          if (record) {
+            setFinancial({
+              description: record.description,
+              amount: record.amount,
+              category: record.category,
+              date: record.date,
+              paymentMethod: record.paymentMethod,
+              userId: record.user,
+            });
+          } else {
+            console.log("ID not found in records");
+          }
+        } catch (error) {
+          console.error("Error fetching financial data:", error);
+        }
+      };
+      getFinancialById();
+    }, [id, records]);
+    // useEffect(() => {
+    //     const getFinancialById = async () => {
+    //         try {
+    //             const response = await FinancialService.getByFinancialId(id);
+    //             console.log(response.data);
+    //             setFinancial(response.data);
                 
-                const formattedDate = data.date ? new Date(data.date).toISOString().split('T')[0] : "";
-                
-                setFinancial({
-                    ...data,
-                    date: formattedDate
-                });
-                
-            } catch (error) {
-                console.error("Error fetching financial data:", error);
-            }
-        };
-        getFinancialById();
-    }, []);
+    //         } catch (error) {
+    //             console.error("Error fetching financial data:", error);
+    //         }
+    //     };
+    //     getFinancialById();
+    // }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -50,27 +67,12 @@ function EditRecord_page() {
             console.log("Updated financial:", updatedFinancial);
             
             await update_Financial(id,updatedFinancial);
-            Swal.fire({
-                position: "center",
-                icon: "success",
-                title: "Your work has been saved",
-                showConfirmButton: false,
-                timer: 1500
-              });
             navigate("/dashbord")
-            setTimeout(() => {
-                window.location.reload();
-              }, 500);
+            // setTimeout(() => {
+            //     window.location.reload();
+            //   }, 500);
           } catch (error) {
             console.error("Error in handleClick:", error);
-            Swal.fire({
-                position: "center",
-                icon: "error",
-                title: error?.response?.data?.message || "An error occurred",
-                showConfirmButton: false,
-                timer: 1500
-              });
-            
           }
     };
 
@@ -85,7 +87,6 @@ function EditRecord_page() {
         "Debit Card",
         "PayPal",
     ];
-
     return (
         <div className="card bg-base-100 p-6 w-full max-w-md mx-auto">
             <label>

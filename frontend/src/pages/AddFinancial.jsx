@@ -28,14 +28,8 @@ function AddFinancial() {
       const updatedFinancial = { ...financial, userId: user.id };
       console.log("Updated financial:", updatedFinancial);
       
-      const response = await add_Financial(updatedFinancial)
-      console.log("Response from add_Financial:", response);
+      await add_Financial(updatedFinancial)
       
-      if (response.status === 200) {
-        alert("Record added successfully");
-      } else {
-        alert("Failed to add record");
-      }
     } catch (error) {
       console.error("Error in handleClick:", error);
       alert(error?.response?.data?.message || "An error occurred");

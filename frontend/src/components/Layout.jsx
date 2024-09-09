@@ -3,7 +3,7 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { useEffect, useState } from "react";
 import { FinancialProvider } from "../contexts/financial.context";
-
+import { SignedIn, SignedOut } from "@clerk/clerk-react";
 function Layout() {
   const [theme, setTheme] = useState(
     () => localStorage.getItem("theme") || "light"
