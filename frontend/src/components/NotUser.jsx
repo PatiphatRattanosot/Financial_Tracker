@@ -6,7 +6,7 @@ import { Navigate } from 'react-router-dom'
 function NotUser() {
     const {user} = useUser()
     if (!user) {
-        return <Navigate to="/" />
+        return <Navigate to="/notAllow" />
       }
 }
 

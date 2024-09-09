@@ -5,8 +5,8 @@ import AddFinancial from "../pages/AddFinancial";
 import Dashbord from "../pages/dashbord";
 import Home from "../pages/Home";
 import EditRecord_Page from "../pages/EditRecord_Page";
-import NotUser from "../components/NotUser";
-
+import IsUser from "../components/NotUser";
+import NotAllow from "../pages/NotAllow";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -18,18 +18,21 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashbord",
-        element: <NotUser> <Dashbord /> </NotUser>,
+        element: <IsUser> <Dashbord /> </IsUser>,
       },
       {
         path: "/financial",
-        element: <NotUser> <Financial_Page /> </NotUser>,
+        element: <IsUser> <Financial_Page /> </IsUser>,
       },
       {
         path: "/add",
-        element: <NotUser> <AddFinancial /> </NotUser>,
+        element: <IsUser> <AddFinancial /> </IsUser>,
       },{
         path:"/edit/:id",
-        element:<NotUser> <EditRecord_Page/> </NotUser>
+        element:<IsUser> <EditRecord_Page/> </IsUser>
+      },{
+        path:"/notAllow",
+        element:<NotAllow/>
       }
     ],
   },
