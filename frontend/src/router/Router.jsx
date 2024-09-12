@@ -5,7 +5,6 @@ import AddFinancial from "../pages/AddFinancial";
 import Dashbord from "../pages/dashbord";
 import Home from "../pages/Home";
 import EditRecord_Page from "../pages/EditRecord_Page";
-import IsUser from "../components/NotUser";
 import NotAllow from "../pages/NotAllow";
 const router = createBrowserRouter([
   {
