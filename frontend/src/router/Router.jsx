@@ -18,7 +18,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashbord",
-        element: <IsUser> <Dashbord /> </IsUser>,
+        element:  <Dashbord />,
       },
       {
         path: "/financial",
@@ -26,10 +26,10 @@ const router = createBrowserRouter([
       },
       {
         path: "/add",
-        element: <IsUser> <AddFinancial /> </IsUser>,
+        element:  <AddFinancial /> ,
       },{
         path:"/edit/:id",
-        element:<IsUser> <EditRecord_Page/> </IsUser>
+        element:<EditRecord_Page/>
       },{
         path:"/notAllow",
         element:<NotAllow/>
