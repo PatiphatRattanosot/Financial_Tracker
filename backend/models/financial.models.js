@@ -33,7 +33,7 @@ const Financial = sequelize.define("financial", {
   },
 });
 
-Financial.sync({force:false})
+Financial.sync({ force: false })
   .then(() => {
     console.log("Table Created or already exists");
   })

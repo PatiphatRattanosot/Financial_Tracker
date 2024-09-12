@@ -1,13 +1,14 @@
-import { useUser } from '@clerk/clerk-react'
-import React from 'react'
-import { Navigate } from 'react-router-dom'
+import { useUser } from "@clerk/clerk-react";
+import React from "react";
+import { Navigate } from "react-router-dom";
 
+function NotUser({ children }) {
+  const { user } = useUser();
 
-function NotUser() {
-    const {user} = useUser()
-    if (!user) {
-        return <Navigate to="/notAllow" />
-      }
+  if (user == null) {
+    return children;
+  }
+  return <Navigate to="/notAllow" />;
 }
 
-export default NotUser
+export default NotUser;

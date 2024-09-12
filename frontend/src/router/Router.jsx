@@ -18,22 +18,24 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashbord",
-        element: <IsUser> <Dashbord /> </IsUser>,
+        element: <Dashbord />,
       },
       {
         path: "/financial",
-        element: <IsUser> <Financial_Page /> </IsUser>,
+        element: <Financial_Page />,
       },
       {
         path: "/add",
-        element: <IsUser> <AddFinancial /> </IsUser>,
-      },{
-        path:"/edit/:id",
-        element:<IsUser> <EditRecord_Page/> </IsUser>
-      },{
-        path:"/notAllow",
-        element:<NotAllow/>
-      }
+        element: <AddFinancial />,
+      },
+      {
+        path: "/edit/:id",
+        element: <EditRecord_Page />,
+      },
+      {
+        path: "/notAllow",
+        element: <NotAllow />,
+      },
     ],
   },
 ]);

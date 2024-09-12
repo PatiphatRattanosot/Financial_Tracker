@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useFinancial } from "../contexts/financial.context";
 import Swal from "sweetalert2";
 function Financial_Page() {
-  const { records,delete_Financial } = useFinancial();
+  const { records, delete_Financial } = useFinancial();
   const [financial, setFinancial] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
@@ -31,17 +31,16 @@ function Financial_Page() {
   const handleDelete = async (id) => {
     try {
       await delete_Financial(id);
-      
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Financial Record Delete",
-          text: "Delete " + id + " successfully!",
-          showConfirmButton: true,
-        }).then(() => {
-          // window.location.reload();
-        });
-          
+
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Financial Record Delete",
+        text: "Delete " + id + " successfully!",
+        showConfirmButton: true,
+      }).then(() => {
+        // window.location.reload();
+      });
     } catch (error) {
       Swal.fire({
         position: "center",
@@ -92,10 +91,16 @@ function Financial_Page() {
                       </td>
                     ))}
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium ">
-                      <a href={`/edit/${item.id}`} className="btn btn-info">Edit</a>
-                      <a onClick={() => handleDelete(item.id)} className="btn btn-error ml-4">Delete</a>
+                      <a href={`/edit/${item.id}`} className="btn btn-info">
+                        Edit
+                      </a>
+                      <a
+                        onClick={() => handleDelete(item.id)}
+                        className="btn btn-error ml-4"
+                      >
+                        Delete
+                      </a>
                     </td>
-
                   </tr>
                 ))
               ) : (
@@ -147,6 +152,5 @@ function Financial_Page() {
     </div>
   );
 }
-
 
 export default Financial_Page;

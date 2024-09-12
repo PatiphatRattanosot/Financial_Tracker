@@ -1,11 +1,12 @@
 import React from "react";
 import { createContext, useContext, useEffect, useState } from "react";
 import FinancialService from "../services/financial.service";
+import { format } from "date-fns";
 import { useUser } from "@clerk/clerk-react";
 import Swal from "sweetalert2";
 // export const FinancialContext = createContext();
 
-// export const FinancialProvider = ({ children }) => {}; 
+// export const FinancialProvider = ({ children }) => {};
 
 // export const userFinancial = () => useContext(FinancialContext);
 
@@ -13,27 +14,18 @@ export const FinancialContext = createContext();
 
 export const FinancialProvider = ({ children }) => {
   const [records, setRecords] = useState([]);
-  const [swap,setSwap] = useState(false);
+  const [swap, setSwap] = useState(false);
   const { user } = useUser();
-
-  const formatDate = (date) => {
-    const d = new Date(date);
-    const year = d.getFullYear();
-    const month = String(d.getMonth() + 1).padStart(2, "0"); 
-    const day = String(d.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  };
 
   const fetchRecords = async () => {
     if (!user) return;
     try {
       const response = await FinancialService.getAllFinancialByUserId(user.id);
-      
+
       if (response.status === 200) {
-        
         const formattedRecords = response.data.map((record) => ({
           ...record,
-          date: formatDate(record.date),
+          date: format(new Date(record.date), " dd - MMM - yyyy"),
         }));
         setRecords(formattedRecords);
       }
@@ -42,15 +34,14 @@ export const FinancialProvider = ({ children }) => {
     }
   };
 
-
   useEffect(() => {
     fetchRecords();
-  }, [user,swap]);
+  }, [user, swap]);
 
   const add_Financial = async (financial) => {
     try {
       const response = await FinancialService.addFinancial(financial);
-      
+
       if (response.status === 200) {
         setRecords((prev) => [...prev, response.data]);
         setSwap(!swap);
@@ -81,12 +72,11 @@ export const FinancialProvider = ({ children }) => {
       console.error("Error in add_Financial:", error);
     }
   };
-  
 
   const update_Financial = async (id, newFinancial) => {
     try {
       const response = await FinancialService.updateFinancial(id, newFinancial);
-      console.log("response from update_Financial ",response);
+      console.log("response from update_Financial ", response);
       if (response.status === 200) {
         Swal.fire({
           position: "center",
@@ -118,14 +108,12 @@ export const FinancialProvider = ({ children }) => {
   };
 
   const delete_Financial = async (id) => {
-    
     try {
       const response = await FinancialService.deleteFinancial(id);
       if (response.status === 200) {
         console.log(swap);
         setSwap(!swap);
         setRecords((prev) => prev.filter((record) => record.id !== id));
-        
       }
     } catch (error) {
       Swal.fire({
